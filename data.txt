@@ -1,0 +1,10 @@
+main() {
+    /* 测试while中嵌套while */
+    if (a < b) {
+        if (a < c){
+            if (b < f) {
+                b = b + 1;
+            }
+        }
+    }
+}
