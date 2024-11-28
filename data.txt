@@ -1,10 +1,13 @@
 main() {
-    /* 测试while中嵌套while */
-    if (a < b) {
-        if (a < c){
-            if (b < f) {
-                b = b + 1;
-            }
+    /* 测试while嵌套if */
+    a = 1;
+    b = 2;
+    c = 10;
+    while(a < 10) {
+        a = a + 1;
+        if(a < b) {
+            b = b - 1;
         }
+        c = c * 5;
     }
 }

@@ -247,6 +247,7 @@ public class Main {
         String strTemp, eplace;
         int[] nChainTemp = new int[1];
         int nWQUAD;
+        int nfcInt;
         switch (uWord.getType()) {
             case 50:
                 strTemp = uWord.getWord();
@@ -261,25 +262,25 @@ public class Main {
                 match(syn.get("if"), "if");
                 match(syn.get("("), "(");
                 condition(ntc, nfc);
-                int nfcIntt = nfc[0];
+                nfcInt = nfc[0];
                 bp(ntc[0], nNXQ);
                 match(syn.get(")"), ")");
                 statementBlock(nChainTemp);
                 bp(nChainTemp[0], nNXQ);
-                nChain[0] = nfcIntt;
+                nChain[0] = nfcInt;
                 break;
             case 6:
                 match(syn.get("while"), "while");
                 nWQUAD = nNXQ;
                 match(syn.get("("), "(");
                 condition(ntc, nfc);
-                int nfcInt = nfc[0]; // 因为while里有if时，while里的nfc会被覆盖，那么下方nChain[0] = nfcInt;就得到错误的nChain[0]
+                nfcInt = nfc[0]; // 因为while里有if时，while里的nfc会被覆盖，那么下方nChain[0] = nfcInt;就得到错误的nChain[0]
                 bp(ntc[0], nNXQ);
                 match(syn.get(")"), ")");
                 statementBlock(nChainTemp);
                 bp(nChainTemp[0], nWQUAD);
                 strTemp = nWQUAD + "";
-                gen("jump", "", "", strTemp);
+                gen("jumpBack", "", "", strTemp);
                 nChain[0] = nfcInt;
                 break;
         }
@@ -309,7 +310,7 @@ public class Main {
             efc[0] = nNXQ + 1;
             strTemp = "jump" + opp;
             gen(strTemp, eplace1, eplace2, "0");
-            gen("jump", "", "", "0");
+            gen("jumpN", "", "", "0");
         } else {
             error("关系运算符错误");
         }
@@ -467,5 +468,15 @@ public class Main {
         System.out.println("-------------------------------------------------------");
         // 语法分析
         lrParse();
+
+
+        int maxWidth = 15;
+        String op = "endProject,";
+        String argv1 =  ",";
+        String argv2 = ",";
+        String result = "end";
+        System.out.printf("%-1d:( %-" + maxWidth + "s %-" + maxWidth + "s %-" + maxWidth + "s %-" + 1 + "s)\n",
+                nNXQ, op, argv1, argv2, result);
+
     }
 }
