@@ -469,7 +469,6 @@ public class Main {
         // 语法分析
         lrParse();
 
-
         int maxWidth = 15;
         String op = "endProject,";
         String argv1 =  ",";
@@ -477,6 +476,5 @@ public class Main {
         String result = "end";
         System.out.printf("%-1d:( %-" + maxWidth + "s %-" + maxWidth + "s %-" + maxWidth + "s %-" + 1 + "s)\n",
                 nNXQ, op, argv1, argv2, result);
-
     }
 }
