@@ -17,7 +17,6 @@ public class Main {
     public static int[] nfc = {1};
 
 
-
     // --------------- 去掉空白符号 ----------------
     static int getBlank(String strSource, int i) {
         String ch = String.valueOf(strSource.charAt(i));
@@ -270,7 +269,7 @@ public class Main {
                 nWQUAD = nNXQ;
                 match(syn.get("("), "(");
                 condition(ntc, nfc);
-                nfcInt = nfc[0]; // 因为while里有if时，while里的nfc会被覆盖，那么下方nChain[0] = nfcInt;就得到错误的nChain[0]
+                nfcInt = nfc[0]; // while里有if时，while里的nfc会被覆盖
                 bp(ntc[0], nNXQ);
                 match(syn.get(")"), ")");
                 statementBlock(nChainTemp);
@@ -427,7 +426,6 @@ public class Main {
         syn.put("/*", 31);
         syn.put("*/", 32);
         // 单词是50, 数字是51
-        //结束符//syn.put("\0",33);
     }
 
     // -------------------- 语法分析 --------------------------
