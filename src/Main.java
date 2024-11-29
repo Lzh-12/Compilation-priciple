@@ -62,9 +62,9 @@ public class Main {
                 }
                 i--;
                 if (syn.get(strSource.substring(gnLocateStart, i)) != null) {
-                    uWord.setPair(syn.get(strSource.substring(gnLocateStart, i)), strSource.substring(gnLocateStart, i), gnRow);
+                    uWord.setUWord(syn.get(strSource.substring(gnLocateStart, i)), strSource.substring(gnLocateStart, i), gnRow);
                 } else {
-                    uWord.setPair(50, strSource.substring(gnLocateStart, i), gnRow);
+                    uWord.setUWord(50, strSource.substring(gnLocateStart, i), gnRow);
                 }
             } else if (isDigit(ch)) {
                 while (isDigit(ch)) {
@@ -83,9 +83,9 @@ public class Main {
                     i--;
                 }
                 if (syn.get(strSource.substring(gnLocateStart, i)) != null) {
-                    uWord.setPair(syn.get(strSource.substring(gnLocateStart, i)), strSource.substring(gnLocateStart, i), gnRow);
+                    uWord.setUWord(syn.get(strSource.substring(gnLocateStart, i)), strSource.substring(gnLocateStart, i), gnRow);
                 } else {
-                    uWord.setPair(51, strSource.substring(gnLocateStart, i), gnRow);
+                    uWord.setUWord(51, strSource.substring(gnLocateStart, i), gnRow);
                 }
             } else {
                 switch (ch) {
@@ -99,7 +99,7 @@ public class Main {
                     case ";":
                     case ",":
                     case "%":
-                        uWord.setPair(syn.get(strSource.substring(gnLocateStart, i)), strSource.substring(gnLocateStart, i), gnRow);
+                        uWord.setUWord(syn.get(strSource.substring(gnLocateStart, i)), strSource.substring(gnLocateStart, i), gnRow);
                         break;
                     case "<":
                     case ">":
@@ -107,17 +107,17 @@ public class Main {
                         ch = String.valueOf(strSource.charAt(i));
                         i++;
                         if (ch.equals("=")) {
-                            uWord.setPair(syn.get(strSource.substring(gnLocateStart, i)), strSource.substring(gnLocateStart, i), gnRow);
+                            uWord.setUWord(syn.get(strSource.substring(gnLocateStart, i)), strSource.substring(gnLocateStart, i), gnRow);
                             break;
                         }
                         i--;
-                        uWord.setPair(syn.get(strSource.substring(gnLocateStart, i)), strSource.substring(gnLocateStart, i), gnRow);
+                        uWord.setUWord(syn.get(strSource.substring(gnLocateStart, i)), strSource.substring(gnLocateStart, i), gnRow);
                         break;
                     case "!":
                         ch = String.valueOf(strSource.charAt(i));
                         i++;
                         if (ch.equals("=")) {
-                            uWord.setPair(syn.get(strSource.substring(gnLocateStart, i)), strSource.substring(gnLocateStart, i), gnRow);
+                            uWord.setUWord(syn.get(strSource.substring(gnLocateStart, i)), strSource.substring(gnLocateStart, i), gnRow);
                             break;
                         } else {
                             System.out.println("词法分析有错误，在第" + gnRow + "行。");
@@ -148,21 +148,20 @@ public class Main {
                             break;
                         }
                         i--;
-                        uWord.setPair(syn.get(strSource.substring(gnLocateStart, i)), strSource.substring(gnLocateStart, i), gnRow);
+                        uWord.setUWord(syn.get(strSource.substring(gnLocateStart, i)), strSource.substring(gnLocateStart, i), gnRow);
                         break;
                     case "\0":
                         return;
                     default:
                         System.out.println("词法分析有错误，在第" + gnRow + "行。");
-                        flag = true; // 词法有错，读下一个词
+                        flag = true;
                 }
             }
             gnLocate = i;
         }
     }
 
-    // 如果从控制台读入的话，用while (sc.hasNext())来实现换行后继续读入
-    // 从文件读入
+    // 从文件读入, 如果从控制台读入的话，用while (sc.hasNext())来实现换行后继续读入
     public static String input(String strSource) {
         StringBuilder bf = new StringBuilder();
 
@@ -180,9 +179,6 @@ public class Main {
         return new String(bf);
     }
 
-
-
-
     // --------------------- 打印一个四元式 ---------------------
     public static void printQuaternion() {
         int maxWidth = 15; // 假设我们想要的每列的最大宽度是10
@@ -199,7 +195,7 @@ public class Main {
 
     // ------------------- 输出错误信息 -------------------------
     public static void error(String strError) {
-        System.out.println("语法错误, gnRow:" + gnRow + " " + strError);
+        System.out.println("语法错误，第" + gnRow + "行：缺少 " + strError);
     }
 
     // -------- 判断当前识别出的单词是否是需要的单词,如果不是则报错，否则扫描下一个单词 --------------
@@ -299,11 +295,7 @@ public class Main {
         String strTemp;
         eplace1 = expression();
         if (uWord.getType() >= syn.get("<") && uWord.getType() <= syn.get("!=")) {
-//            if (uWord.getType() == syn.get("<") || uWord.getType() == syn.get(">")) {
-                opp = uWord.getWord();
-//            } else {
-//                opp = uWord.getWord();
-//            }
+            opp = uWord.getWord();
             scanner();
             eplace2 = expression();
             etc[0] = nNXQ;
@@ -381,7 +373,7 @@ public class Main {
     // -------------------- 括号分析函数 --------------------
     public static String factor() {
         String eplace = "";
-        if (uWord.getType() == 50 || uWord.getType() == 51) //为标识符或整常数时，读下一个单词符号
+        if (uWord.getType() == 50 || uWord.getType() == 51) // 为标识符或整常数时，读下一个单词符号
         {
             eplace = uWord.getWord();
             scanner();

@@ -14,7 +14,7 @@ public class Word {
         this.row = row;
     }
 
-    public void setPair(int type, String word, int row){
+    public void setUWord(int type, String word, int row){
         this.type = type;
         this.word = word;
         this.row = row;
