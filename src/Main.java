@@ -119,7 +119,7 @@ public class Main {
                             uWord.setUWord(syn.get(strSource.substring(gnLocateStart, i)), strSource.substring(gnLocateStart, i), gnRow);
                             break;
                         } else {
-                            System.out.println("词法分析有错误，在第" + gnRow + "行。");
+                            System.out.println("词法分析错误，第" + gnRow + "行");
                             flag = true;
                         }
                     case "/":
@@ -152,7 +152,7 @@ public class Main {
                     case "\0":
                         return;
                     default:
-                        System.out.println("词法分析有错误，在第" + gnRow + "行。");
+                        System.out.println("词法分析错误，第" + gnRow + "行");
                         flag = true;
                 }
             }
@@ -160,7 +160,7 @@ public class Main {
         }
     }
 
-    // 从文件读入, 如果从控制台读入的话，用while (sc.hasNext())来实现换行后继续读入
+    // ----------------- 从文件读入 --------------------------
     public static String input(String strSource) {
         StringBuilder bf = new StringBuilder();
 
@@ -194,7 +194,7 @@ public class Main {
 
     // ------------------- 输出错误信息 -------------------------
     public static void error(String strError) {
-        System.out.println("语法错误，第" + gnRow + "行：缺少 " + strError);
+        System.out.println("语法错误，第" + gnRow + "行：" + strError);
     }
 
     // -------- 判断当前识别出的单词是否是需要的单词,如果不是则报错，否则扫描下一个单词 --------------
