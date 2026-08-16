@@ -20,12 +20,12 @@ public class Main {
     // --------------- 去掉空白符号 ----------------
     static int getBlank(String strSource, int i) {
         String ch = String.valueOf(strSource.charAt(i));
-        while (ch.equals(" ") || ch.getBytes()[0] == 10)// 10是换行符"\n"的ascii码
+        while (ch.equals(" ") || ch.getBytes()[0] == 10)
         {
             if (ch.getBytes()[0] == 10) {
                 gnRow++;
             }
-            i = i + 1;
+            i++;
             ch = String.valueOf(strSource.charAt(i));
         }
         return i;
@@ -269,7 +269,7 @@ public class Main {
                 nWQUAD = nNXQ;
                 match(syn.get("("), "(");
                 condition(ntc, nfc);
-                nfcInt = nfc[0]; // while里有if时，while里的nfc会被覆盖
+                nfcInt = nfc[0];
                 bp(ntc[0], nNXQ);
                 match(syn.get(")"), ")");
                 statementBlock(nChainTemp);
@@ -400,7 +400,7 @@ public class Main {
         syn.put("else", 9);
         syn.put("do", 10);
         syn.put("return", 11);
-        // 加减乘除余
+        // 运算符
         syn.put("+", 12);
         syn.put("-", 13);
         syn.put("*", 14);
@@ -421,11 +421,10 @@ public class Main {
         syn.put("}", 27);
         syn.put(";", 28);
         syn.put(",", 29);
-        // 注释
+        // 程序注释
         syn.put("//", 30);
         syn.put("/*", 31);
         syn.put("*/", 32);
-        // 单词是50, 数字是51
     }
 
     // -------------------- 语法分析 --------------------------
@@ -448,7 +447,8 @@ public class Main {
     // ---------------------- 主函数 ----------------------
     public static void main(String[] args) {
         setSyn();
-        String strFileSource = System.getProperty("user.dir") + File.separator + "data.txt";
+//        String strFileSource = System.getProperty("user.dir") + File.separator + "data.txt";
+        String strFileSource = "data.txt";
         // 读取文件
         strSource = input(strFileSource);
         System.out.println("--------------------- 语义分析结果 ----------------------");
